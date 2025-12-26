@@ -18,9 +18,9 @@ const char* blueFragmentShaderPath = "../shaders/blueFragmentShader.fs";
 
 const char* lightvertexShaderPath = "../shaders/lightvertexShader.vs";
 const char* fragmentShaderPath = "../shaders/fragmentShader.fs";
-//const char* imguiFontPath = "../imgui/misc/fonts/DroidSans.ttf";  //×ÖÌåÂ·¾¶
+//const char* imguiFontPath = "../imgui/misc/fonts/DroidSans.ttf";  //å­—ä½“è·¯å¾„
 
-const char* imguiFontPath = "../imgui/misc/fonts/DroidSans.ttf";  //×ÖÌåÂ·¾¶
+const char* imguiFontPath = "../imgui/misc/fonts/DroidSans.ttf";  //å­—ä½“è·¯å¾„
 
 GLProgram::GLProgram() :
     deltaTime(0.0f), prevTime(0.0f) {
@@ -104,15 +104,15 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
                 glm::vec3 tmp = tinynurbs::surfacePoint(surfaces[k], u, v);
                 glm::vec3 tmp1 = tinynurbs::surfaceNormal(surfaces[k], u, v);
 
-                double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+                double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
 
                 tmp1.x = tmp1.x / length;
                 tmp1.y = tmp1.y / length;
                 tmp1.z = tmp1.z / length;
             
-                glm::vec3 tmp2; //±£´æÑÓÉìºóµÄÊı¾İµã
+                glm::vec3 tmp2; //ä¿å­˜å»¶ä¼¸åçš„æ•°æ®ç‚¹
 
-                double len = 0.2; //ÓÃÀ´ÑÓÉìµÄ
+                double len = 0.2; //ç”¨æ¥å»¶ä¼¸çš„
                 tmp2.x = tmp.x - tmp1.x * len;
                 tmp2.y = tmp.y - tmp1.y * len;
                 tmp2.z = tmp.z - tmp1.z * len;
@@ -160,13 +160,13 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
 
         tinynurbs::array2<glm::vec<3,double>> res = tinynurbs::surfaceDerivatives(surfaces[k], 1, up, vp);
 
-        glm::vec3 tmp1 = res(1, 0);  //u·½Ïòµ¼Êı
-        double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+        glm::vec3 tmp1 = res(1, 0);  //uæ–¹å‘å¯¼æ•°
+        double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
         tmp1.x = tmp1.x / length;
         tmp1.y = tmp1.y / length;
         tmp1.z = tmp1.z / length;
-        glm::vec3 tmp2; //±£´æÑÓÉìºóµÄÊı¾İµã
-        double len = 0.2; //ÓÃÀ´ÑÓÉìµÄ
+        glm::vec3 tmp2; //ä¿å­˜å»¶ä¼¸åçš„æ•°æ®ç‚¹
+        double len = 0.2; //ç”¨æ¥å»¶ä¼¸çš„
         tmp2.x = tmp.x - tmp1.x * len;
         tmp2.y = tmp.y - tmp1.y * len;
         tmp2.z = tmp.z - tmp1.z * len;
@@ -175,12 +175,12 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
 
         this->UsurfaceDerivateRender[k].Initial(vertexShaderPath, blueFragmentShaderPath, Vertices, OffsetVertex);
 
-        tmp1 = res(0, 1);  //v·½Ïòµ¼Êı
-        length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+        tmp1 = res(0, 1);  //væ–¹å‘å¯¼æ•°
+        length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
         tmp1.x = tmp1.x / length;
         tmp1.y = tmp1.y / length;
         tmp1.z = tmp1.z / length;
-        len = 0.2; //ÓÃÀ´ÑÓÉìµÄ
+        len = 0.2; //ç”¨æ¥å»¶ä¼¸çš„
         tmp2.x = tmp.x - tmp1.x * len;
         tmp2.y = tmp.y - tmp1.y * len;
         tmp2.z = tmp.z - tmp1.z * len;
@@ -190,11 +190,11 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
 
 
         tmp1 = tinynurbs::surfaceNormal(surfaces[k], up, vp);
-        length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+        length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
         tmp1.x = tmp1.x / length;
         tmp1.y = tmp1.y / length;
         tmp1.z = tmp1.z / length;
-        len = 0.2; //ÓÃÀ´ÑÓÉìµÄ
+        len = 0.2; //ç”¨æ¥å»¶ä¼¸çš„
         tmp2.x = tmp.x + tmp1.x * len;
         tmp2.y = tmp.y + tmp1.y * len;
         tmp2.z = tmp.z + tmp1.z * len;
@@ -243,13 +243,13 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
 
         std::vector<glm::dvec3> derivateData = tinynurbs::curveDerivatives(curves[k], 1, p);
 
-        glm::vec3 tmp1 = derivateData[1];  //ÇúÏßÒ»µãµÄµ¼ÊıÔËËã½á¹û
-        double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+        glm::vec3 tmp1 = derivateData[1];  //æ›²çº¿ä¸€ç‚¹çš„å¯¼æ•°è¿ç®—ç»“æœ
+        double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
         tmp1.x = tmp1.x / length;
         tmp1.y = tmp1.y / length;
         tmp1.z = tmp1.z / length;
-        glm::vec3 tmp2; //±£´æÑÓÉìºóµÄÊı¾İµã
-        double len = 1; //ÓÃÀ´ÑÓÉìµÄ
+        glm::vec3 tmp2; //ä¿å­˜å»¶ä¼¸åçš„æ•°æ®ç‚¹
+        double len = 1; //ç”¨æ¥å»¶ä¼¸çš„
         tmp2.x = tmp.x - tmp1.x * len;
         tmp2.y = tmp.y - tmp1.y * len;
         tmp2.z = tmp.z - tmp1.z * len;
@@ -384,12 +384,12 @@ void GLProgram::run(vector<tinynurbs::RationalCurve<double>> curves, vector<tiny
             tinynurbs::array2<glm::vec<3, double>> res = tinynurbs::surfaceDerivatives(surfaces[k], 1, up, vp);
 
             glm::vec3 tmp1 = res(1, 0);
-            double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+            double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
             tmp1.x = tmp1.x / length;
             tmp1.y = tmp1.y / length;
             tmp1.z = tmp1.z / length;
-            glm::vec3 tmp2; //±£´æÑÓÉìºóµÄÊı¾İµã
-            double len = 0.2; //ÓÃÀ´ÑÓÉìµÄ
+            glm::vec3 tmp2; //ä¿å­˜å»¶ä¼¸åçš„æ•°æ®ç‚¹
+            double len = 0.2; //ç”¨æ¥å»¶ä¼¸çš„
             tmp2.x = tmp.x - tmp1.x * len;
             tmp2.y = tmp.y - tmp1.y * len;
             tmp2.z = tmp.z - tmp1.z * len;
@@ -397,11 +397,11 @@ void GLProgram::run(vector<tinynurbs::RationalCurve<double>> curves, vector<tiny
             OffsetVertex[0][0] = tmp2;
             this->UsurfaceDerivateRender[k].Initial(vertexShaderPath, blueFragmentShaderPath, Vertices, OffsetVertex);
             tmp1 = res(0, 1);
-            length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+            length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
             tmp1.x = tmp1.x / length;
             tmp1.y = tmp1.y / length;
             tmp1.z = tmp1.z / length;
-            len = 0.2; //ÓÃÀ´ÑÓÉìµÄ
+            len = 0.2; //ç”¨æ¥å»¶ä¼¸çš„
             tmp2.x = tmp.x - tmp1.x * len;
             tmp2.y = tmp.y - tmp1.y * len;
             tmp2.z = tmp.z - tmp1.z * len;
@@ -414,11 +414,11 @@ void GLProgram::run(vector<tinynurbs::RationalCurve<double>> curves, vector<tiny
             }
 
             tmp1 = tinynurbs::surfaceNormal(surfaces[k], up, vp);
-            length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+            length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
             tmp1.x = tmp1.x / length;
             tmp1.y = tmp1.y / length;
             tmp1.z = tmp1.z / length;
-            len = 0.2; //ÓÃÀ´ÑÓÉìµÄ
+            len = 0.2; //ç”¨æ¥å»¶ä¼¸çš„
             tmp2.x = tmp.x + tmp1.x * len;
             tmp2.y = tmp.y + tmp1.y * len;
             tmp2.z = tmp.z + tmp1.z * len;
@@ -451,15 +451,15 @@ void GLProgram::run(vector<tinynurbs::RationalCurve<double>> curves, vector<tiny
                 std::vector<glm::dvec3> derivateData = tinynurbs::curveDerivatives(curves[k], 1, p);
                 glm::vec3 tmp1 = derivateData[1];
 
-                double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ÓÃÀ´µ¥Î»»¯µÄ
+                double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //ç”¨æ¥å•ä½åŒ–çš„
 
                 tmp1.x = tmp1.x / length;
                 tmp1.y = tmp1.y / length;
                 tmp1.z = tmp1.z / length;
 
-                glm::vec3 tmp2; //±£´æÑÓÉìºóµÄÊı¾İµã
+                glm::vec3 tmp2; //ä¿å­˜å»¶ä¼¸åçš„æ•°æ®ç‚¹
 
-                double len = 1; //ÓÃÀ´ÑÓÉìµÄ
+                double len = 1; //ç”¨æ¥å»¶ä¼¸çš„
                 tmp2.x = tmp.x - tmp1.x * len;
                 tmp2.y = tmp.y - tmp1.y * len;
                 tmp2.z = tmp.z - tmp1.z * len;
