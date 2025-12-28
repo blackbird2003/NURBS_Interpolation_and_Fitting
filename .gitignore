@@ -1,6 +1,8 @@
 ﻿# NURBS2025 .gitignore
 # 忽略构建输出和临时文件（CMake / Visual Studio / 常见 OS/IDE）
 
+/.cache/
+
 # CMake / build
 /build/
 /Debug/

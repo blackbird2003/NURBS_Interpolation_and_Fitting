@@ -7,6 +7,12 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+// use self implemented 
+// * NURBS曲线、曲面求值mynurbs::curvePoint、mynurbs::surfacePoint
+// * NURBS曲线、曲面求导数mynurbs::curveDerivatives、mynurbs::surfaceDerivatives
+// * NURBS曲面求法向mynurbs::surfaceNormal
+#include "../include/MyNURBS.h"
+
 
 // shader source code paths
 
@@ -101,8 +107,8 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
             Normal[x].resize(numY);
             for (int y = 0; y < numY; y++) {
                 // add vertex
-                glm::vec3 tmp = tinynurbs::surfacePoint(surfaces[k], u, v);
-                glm::vec3 tmp1 = tinynurbs::surfaceNormal(surfaces[k], u, v);
+                glm::vec3 tmp = mynurbs::surfacePoint(surfaces[k], u, v);
+                glm::vec3 tmp1 = mynurbs::surfaceNormal(surfaces[k], u, v);
 
                 double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //用来单位化的
 
@@ -156,9 +162,9 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
         up = 0.5;
         vp = 0.5;
 
-        glm::vec3 tmp = tinynurbs::surfacePoint(surfaces[k], up, vp);
+        glm::vec3 tmp = mynurbs::surfacePoint(surfaces[k], up, vp);
 
-        tinynurbs::array2<glm::vec<3,double>> res = tinynurbs::surfaceDerivatives(surfaces[k], 1, up, vp);
+        tinynurbs::array2<glm::vec<3,double>> res = mynurbs::surfaceDerivatives(surfaces[k], 1, up, vp);
 
         glm::vec3 tmp1 = res(1, 0);  //u方向导数
         double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //用来单位化的
@@ -189,7 +195,7 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
         this->VsurfaceDerivateRender[k].Initial(vertexShaderPath, redFragmentShaderPath, Vertices, OffsetVertex);
 
 
-        tmp1 = tinynurbs::surfaceNormal(surfaces[k], up, vp);
+        tmp1 = mynurbs::surfaceNormal(surfaces[k], up, vp);
         length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //用来单位化的
         tmp1.x = tmp1.x / length;
         tmp1.y = tmp1.y / length;
@@ -219,7 +225,7 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
         delta = 1.0 / (3000 / 3 - 1); 
         for (int i = 0; i < 3000 / 3; i++)
         {
-            glm::vec3 tmp = tinynurbs::curvePoint(curves[k], u);
+            glm::vec3 tmp = mynurbs::curvePoint(curves[k], u);
 
             crvvertex[i] = tmp;
             u += delta;
@@ -239,9 +245,9 @@ void GLProgram::init(vector<tinynurbs::RationalCurve<double>> curves, vector<tin
         vector<vector<glm::vec3>> Vertices;
         vector<vector<glm::vec3>> OffsetVertex;
 
-        glm::vec3 tmp = tinynurbs::curvePoint(curves[k], p);
+        glm::vec3 tmp = mynurbs::curvePoint(curves[k], p);
 
-        std::vector<glm::dvec3> derivateData = tinynurbs::curveDerivatives(curves[k], 1, p);
+        std::vector<glm::dvec3> derivateData = mynurbs::curveDerivatives(curves[k], 1, p);
 
         glm::vec3 tmp1 = derivateData[1];  //曲线一点的导数运算结果
         double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //用来单位化的
@@ -379,9 +385,9 @@ void GLProgram::run(vector<tinynurbs::RationalCurve<double>> curves, vector<tiny
             up = tangent_u;
             vp = tangent_v;
 
-            glm::vec3 tmp = tinynurbs::surfacePoint(surfaces[k], up, vp);
+            glm::vec3 tmp = mynurbs::surfacePoint(surfaces[k], up, vp);
 
-            tinynurbs::array2<glm::vec<3, double>> res = tinynurbs::surfaceDerivatives(surfaces[k], 1, up, vp);
+            tinynurbs::array2<glm::vec<3, double>> res = mynurbs::surfaceDerivatives(surfaces[k], 1, up, vp);
 
             glm::vec3 tmp1 = res(1, 0);
             double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //用来单位化的
@@ -413,7 +419,7 @@ void GLProgram::run(vector<tinynurbs::RationalCurve<double>> curves, vector<tiny
                 this->VsurfaceDerivateRender[k].Draw(camera, modelMatrix, lightPos, windowWidth, windowHeight);
             }
 
-            tmp1 = tinynurbs::surfaceNormal(surfaces[k], up, vp);
+            tmp1 = mynurbs::surfaceNormal(surfaces[k], up, vp);
             length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //用来单位化的
             tmp1.x = tmp1.x / length;
             tmp1.y = tmp1.y / length;
@@ -446,9 +452,9 @@ void GLProgram::run(vector<tinynurbs::RationalCurve<double>> curves, vector<tiny
                 vector<vector<glm::vec3>> Vertices;
                 vector<vector<glm::vec3>> OffsetVertex;
 
-                glm::vec3 tmp = tinynurbs::curvePoint(curves[k], p);
+                glm::vec3 tmp = mynurbs::curvePoint(curves[k], p);
 
-                std::vector<glm::dvec3> derivateData = tinynurbs::curveDerivatives(curves[k], 1, p);
+                std::vector<glm::dvec3> derivateData = mynurbs::curveDerivatives(curves[k], 1, p);
                 glm::vec3 tmp1 = derivateData[1];
 
                 double length = sqrt(pow(tmp1.x, 2) + pow(tmp1.y, 2) + pow(tmp1.z, 2)); //用来单位化的

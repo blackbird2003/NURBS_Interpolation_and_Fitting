@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 3.16)
 project ("project")
 
+# Enable compile_commands.json generation
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 file(GLOB SRCS "./src/*.cpp" "./src/*.c" "./imgui/*.cpp" "./imgui/backends/*.cpp")
 add_executable(project ${SRCS})
 target_include_directories(project PRIVATE "./include" "./imgui" "./imgui/backends")
